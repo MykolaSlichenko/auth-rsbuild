@@ -1,95 +1,97 @@
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 
 const LoginPage = () => {
-  const [email, setEmail] =
-    useState("");
+    const navigate = useNavigate();
 
-  const [password, setPassword] =
-    useState("");
+    const [email, setEmail] =
+        useState("");
 
-  const [message, setMessage] =
-    useState("");
+    const [password, setPassword] =
+        useState("");
 
-  const handleSubmit = async (
-    e: React.FormEvent
-  ) => {
-    e.preventDefault();
+    const [message, setMessage] =
+        useState("");
 
-    try {
-      const response = await api.post(
-        "/auth/login",
-        {
-          email,
-          password,
+    const handleSubmit = async (
+        e: React.FormEvent
+    ) => {
+        e.preventDefault();
+
+        try {
+            const response = await api.post(
+                "/auth/login",
+                {
+                    email,
+                    password,
+                }
+            );
+
+            localStorage.setItem(
+                "accessToken",
+                response.data.accessToken
+            );
+
+            localStorage.setItem(
+                "refreshToken",
+                response.data.refreshToken
+            );
+
+            navigate("/dashboard");
+        } catch (error: any) {
+            setMessage(
+                error.response?.data?.message ||
+                "Login failed"
+            );
         }
-      );
+    };
 
-      localStorage.setItem(
-        "accessToken",
-        response.data.accessToken
-      );
+    return (
+        <div className="min-h-screen flex items-center justify-center">
+            <form
+                onSubmit={handleSubmit}
+                className="w-full max-w-md space-y-4 border p-6 rounded-xl"
+            >
+                <h1 className="text-3xl font-bold">
+                    Login
+                </h1>
 
-      localStorage.setItem(
-        "refreshToken",
-        response.data.refreshToken
-      );
+                <input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) =>
+                        setEmail(e.target.value)
+                    }
+                    className="w-full border p-3 rounded-lg"
+                />
 
-      setMessage("Login successful");
-    } catch (error: any) {
-      setMessage(
-        error.response?.data?.message ||
-          "Login failed"
-      );
-    }
-  };
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) =>
+                        setPassword(e.target.value)
+                    }
+                    className="w-full border p-3 rounded-lg"
+                />
 
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-md space-y-4 border p-6 rounded-xl"
-      >
-        <h1 className="text-3xl font-bold">
-          Login
-        </h1>
+                <button
+                    type="submit"
+                    className="w-full border p-3 rounded-lg"
+                >
+                    Login
+                </button>
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) =>
-            setEmail(e.target.value)
-          }
-          className="w-full border p-3 rounded-lg"
-        />
-
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) =>
-            setPassword(e.target.value)
-          }
-          className="w-full border p-3 rounded-lg"
-        />
-
-        <button
-          type="submit"
-          className="w-full border p-3 rounded-lg"
-        >
-          Login
-        </button>
-
-        {message && (
-          <p className="text-sm">
-            {message}
-          </p>
-        )}
-      </form>
-    </div>
-  );
+                {message && (
+                    <p className="text-sm">
+                        {message}
+                    </p>
+                )}
+            </form>
+        </div>
+    );
 };
 
 export default LoginPage;

@@ -2,6 +2,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -22,7 +23,11 @@ function App() {
 
       <Route
         path="/dashboard"
-        element={<DashboardPage />}
+        element={
+          <ProtectedRoute>
+            <DashboardPage />
+          </ProtectedRoute>
+        }
       />
     </Routes>
   );

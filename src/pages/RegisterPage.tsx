@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import api from "../api/axios";
 
 const RegisterPage = () => {
+    const navigate = useNavigate();
     const [email, setEmail] =
         useState("");
 
@@ -27,6 +29,11 @@ const RegisterPage = () => {
 
             setEmail("");
             setPassword("");
+
+            // Redirect to login page after 1.5 seconds
+            setTimeout(() => {
+                navigate("/login");
+            }, 1500);
         } catch (error: any) {
             setMessage(
                 error.response?.data?.message ||
