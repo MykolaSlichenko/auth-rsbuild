@@ -3,6 +3,7 @@ import App from './App';
 import {
   BrowserRouter,
 } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
 
 import './index.css';
 
@@ -13,7 +14,9 @@ if (rootEl) {
   );
   root.render(
     <BrowserRouter>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </BrowserRouter>,
   );
 }

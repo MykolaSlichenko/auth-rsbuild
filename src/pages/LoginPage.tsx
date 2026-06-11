@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
+import { useAuth } from "../context/AuthContext";
 
 const LoginPage = () => {
-    const navigate = useNavigate();
+    const { login } = useAuth();
 
     const [email, setEmail] =
         useState("");
@@ -28,17 +28,16 @@ const LoginPage = () => {
                 }
             );
 
-            localStorage.setItem(
-                "accessToken",
-                response.data.accessToken
-            );
+            const loginUser = response.data?.user ?? response.data;
 
-            localStorage.setItem(
-                "refreshToken",
+            await login(
+                response.data.accessToken,
+                {
+                    userId: loginUser?.userId,
+                    email: loginUser?.email,
+                },
                 response.data.refreshToken
             );
-
-            navigate("/dashboard");
         } catch (error: any) {
             setMessage(
                 error.response?.data?.message ||
