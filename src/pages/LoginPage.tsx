@@ -27,6 +27,7 @@ const LoginPage = () => {
                     password,
                 }
             );
+            console.log(response.data);
 
             const loginUser = response.data?.user ?? response.data;
 

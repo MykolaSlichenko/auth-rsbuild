@@ -72,23 +72,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = async (
-    token: string,
-    providedUser?: { userId?: string; email?: string },
-    refreshToken?: string
-  ) => {
-    localStorage.setItem("accessToken", token);
-    if (refreshToken) localStorage.setItem("refreshToken", refreshToken);
-    setAccessToken(token);
+  token: string,
+  providedUser?: {
+    userId?: string;
+    email?: string;
+  },
+  refreshToken?: string
+) => {
+  localStorage.setItem(
+    "accessToken",
+    token
+  );
 
-    if (providedUser) {
-      setUser({ userId: providedUser.userId, email: providedUser.email });
-      setLoading(false);
-    } else {
-      await refreshUser(token);
-    }
+  if (refreshToken) {
+    localStorage.setItem(
+      "refreshToken",
+      refreshToken
+    );
+  }
 
-    navigate("/dashboard");
-  };
+  setAccessToken(token);
+
+  await refreshUser(token);
+
+  navigate("/dashboard");
+};
 
   const logout = () => {
     localStorage.removeItem("accessToken");
