@@ -40,11 +40,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     try {
-      const response = await api.get("/auth/me", {
-        headers: {
-          Authorization: `Bearer ${t}`,
-        },
-      });
+      const response = await api.get("/auth/me");
 
       // Accept either { user } or direct { email, userId } shapes
       const respUser = response.data?.user ?? response.data;
