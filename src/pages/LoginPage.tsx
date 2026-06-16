@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 
 const LoginPage = () => {
+    const navigate = useNavigate();
     const { login } = useAuth();
 
     const [email, setEmail] =
@@ -13,6 +15,9 @@ const LoginPage = () => {
 
     const [message, setMessage] =
         useState("");
+
+    const [isError, setIsError] =
+        useState(false);
 
     const handleSubmit = async (
         e: React.FormEvent
@@ -39,11 +44,13 @@ const LoginPage = () => {
                 },
                 response.data.refreshToken
             );
+            setIsError(false);
         } catch (error: any) {
             setMessage(
                 error.response?.data?.message ||
                 "Login failed"
             );
+            setIsError(true);
         }
     };
 
@@ -64,7 +71,11 @@ const LoginPage = () => {
                     onChange={(e) =>
                         setEmail(e.target.value)
                     }
-                    className="w-full border p-3 rounded-lg"
+                    className={`w-full border p-3 rounded-lg ${
+                        isError
+                            ? "border-red-500 bg-red-50"
+                            : ""
+                    }`}
                 />
 
                 <input
@@ -74,7 +85,11 @@ const LoginPage = () => {
                     onChange={(e) =>
                         setPassword(e.target.value)
                     }
-                    className="w-full border p-3 rounded-lg"
+                    className={`w-full border p-3 rounded-lg ${
+                        isError
+                            ? "border-red-500 bg-red-50"
+                            : ""
+                    }`}
                 />
 
                 <button
@@ -85,10 +100,25 @@ const LoginPage = () => {
                 </button>
 
                 {message && (
-                    <p className="text-sm">
+                    <p className="text-sm text-red-600 bg-red-50 p-3 rounded-lg">
                         {message}
                     </p>
                 )}
+
+                <div className="pt-2">
+                    <p className="text-center text-sm text-gray-600">
+                        Don't have an account?{" "}
+                        <button
+                            type="button"
+                            onClick={() =>
+                                navigate("/register")
+                            }
+                            className="font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+                        >
+                            Sign up here
+                        </button>
+                    </p>
+                </div>
             </form>
         </div>
     );

@@ -14,6 +14,9 @@ const RegisterPage = () => {
     const [message, setMessage] =
         useState("");
 
+    const [isError, setIsError] =
+        useState(false);
+
     const handleSubmit = async (
         e: React.FormEvent
     ) => {
@@ -26,6 +29,7 @@ const RegisterPage = () => {
             });
 
             setMessage("Registration successful");
+            setIsError(false);
 
             setEmail("");
             setPassword("");
@@ -39,6 +43,7 @@ const RegisterPage = () => {
                 error.response?.data?.message ||
                 "Registration failed"
             );
+            setIsError(true);
         }
     };
 
@@ -59,7 +64,11 @@ const RegisterPage = () => {
                     onChange={(e) =>
                         setEmail(e.target.value)
                     }
-                    className="w-full border p-3 rounded-lg"
+                    className={`w-full border p-3 rounded-lg ${
+                        isError
+                            ? "border-red-500 bg-red-50"
+                            : ""
+                    }`}
                 />
 
                 <input
@@ -69,7 +78,11 @@ const RegisterPage = () => {
                     onChange={(e) =>
                         setPassword(e.target.value)
                     }
-                    className="w-full border p-3 rounded-lg"
+                    className={`w-full border p-3 rounded-lg ${
+                        isError
+                            ? "border-red-500 bg-red-50"
+                            : ""
+                    }`}
                 />
 
                 <button
@@ -80,10 +93,29 @@ const RegisterPage = () => {
                 </button>
 
                 {message && (
-                    <p className="text-sm">
+                    <p className={`text-sm p-3 rounded-lg ${
+                        isError
+                            ? "text-red-600 bg-red-50"
+                            : "text-green-600 bg-green-50"
+                    }`}>
                         {message}
                     </p>
                 )}
+
+                <div className="pt-2">
+                    <p className="text-center text-sm text-gray-600">
+                        Already have an account?{" "}
+                        <button
+                            type="button"
+                            onClick={() =>
+                                navigate("/login")
+                            }
+                            className="font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+                        >
+                            Log in here
+                        </button>
+                    </p>
+                </div>
             </form>
         </div>
     );
