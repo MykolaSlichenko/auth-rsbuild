@@ -16,7 +16,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur-sm shadow-sm">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         <a href="#home" className="text-lg font-semibold tracking-tight text-slate-900">
-          Brand
+          Logo
         </a>
 
         <nav className="hidden items-center gap-6 md:flex">
