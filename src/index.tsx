@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import {
-  BrowserRouter,
+  HashRouter,
 } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 
@@ -13,10 +13,10 @@ if (rootEl) {
     document.getElementById("root")!
   );
   root.render(
-    <BrowserRouter>
+    <HashRouter>
       <AuthProvider>
         <App />
       </AuthProvider>
-    </BrowserRouter>,
+    </HashRouter>,
   );
 }
