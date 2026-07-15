@@ -6,19 +6,19 @@ import api from "../api/axios";
 const RegisterPage = () => {
     const navigate = useNavigate();
 
-    const [firstName, setFirstName] = useState("");
+    const [firstName, setFirstName] = useState("Test");
 
-    const [lastName, setLastName] = useState("");
+    const [lastName, setLastName] = useState("Last Test");
 
     const [acceptedTerms, setAcceptedTerms] = useState(false);
 
     const [email, setEmail] =
-        useState("");
+        useState("test@test.com");
 
     const [password, setPassword] =
-        useState("");
+        useState("Test123!");
 
-    const [confirmPassword, setConfirmPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("Test123!");
 
     const [message, setMessage] =
         useState("");
@@ -42,7 +42,6 @@ const RegisterPage = () => {
             setIsError(true);
             return;
         }
-        e.preventDefault();
 
         try {
             await api.post("/auth/register", {
@@ -50,6 +49,7 @@ const RegisterPage = () => {
                 lastName,
                 email,
                 password,
+                acceptedTerms,
             });
 
             setMessage("Registration successful");
