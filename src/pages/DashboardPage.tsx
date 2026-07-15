@@ -14,7 +14,7 @@ export default function DashboardPage() {
             Dashboard
           </p>
           <h1 className="text-2xl font-semibold text-slate-900">
-            Welcome {user?.email}
+            Welcome{user?.firstName ? `, ${user.firstName}` : ""}
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-slate-600">
             A clean, responsive experience with quick access to your main sections.

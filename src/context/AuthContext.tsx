@@ -5,6 +5,8 @@ import api from "../api/axios";
 type User = {
   userId?: string;
   email?: string;
+  firstName?: string;
+  lastName?: string;
 };
 
 type AuthContextType = {
@@ -14,7 +16,7 @@ type AuthContextType = {
   error: string | null;
   login: (
     accessToken: string,
-    user?: { userId?: string; email?: string },
+    user?: { userId?: string; email?: string; firstName?: string; lastName?: string },
     refreshToken?: string
   ) => Promise<void>;
   logout: () => void;
@@ -47,6 +49,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setUser({
         userId: respUser?.userId,
         email: respUser?.email,
+        firstName: respUser?.firstName,
+        lastName: respUser?.lastName,
       });
       setError(null);
     } catch (err: any) {
@@ -72,6 +76,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   providedUser?: {
     userId?: string;
     email?: string;
+    firstName?: string;
+    lastName?: string;
   },
   refreshToken?: string
 ) => {
@@ -88,6 +94,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }
 
   setAccessToken(token);
+
+  if (providedUser) {
+    setUser({
+      userId: providedUser.userId,
+      email: providedUser.email,
+      firstName: providedUser.firstName,
+      lastName: providedUser.lastName,
+    });
+  }
 
   await refreshUser(token);
 

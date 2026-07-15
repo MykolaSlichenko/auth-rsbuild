@@ -94,9 +94,9 @@ const LoginPage = () => {
 
                 <button
                     type="submit"
-                    className="w-full border p-3 rounded-lg cursor-pointer"
+                    className="w-full rounded-lg cursor-pointer bg-blue-600 text-white font-bold text-lg p-3 border border-blue-700 hover:bg-blue-700 transition-colors"
                 >
-                    Login
+                    Send
                 </button>
 
                 {message && (
