@@ -60,7 +60,7 @@ const LoginPage = () => {
                 onSubmit={handleSubmit}
                 className="w-full max-w-md space-y-4 border p-6 rounded-xl"
             >
-                <h1 className="text-3xl font-bold">
+                <h1 className="text-3xl font-bold text-center">
                     Login
                 </h1>
 
@@ -94,7 +94,7 @@ const LoginPage = () => {
 
                 <button
                     type="submit"
-                    className="w-full border p-3 rounded-lg"
+                    className="w-full border p-3 rounded-lg cursor-pointer"
                 >
                     Login
                 </button>
@@ -113,7 +113,7 @@ const LoginPage = () => {
                             onClick={() =>
                                 navigate("/register")
                             }
-                            className="font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+                            className="font-semibold text-blue-600 hover:text-blue-700 hover:cursor-pointer transition-colors"
                         >
                             Sign up here
                         </button>
