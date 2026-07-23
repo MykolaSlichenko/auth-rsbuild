@@ -46,6 +46,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       // Accept either { user } or direct { email, userId } shapes
       const respUser = response.data?.user ?? response.data;
+
+      console.log("responseUser: ", respUser);
       setUser({
         userId: respUser?.userId,
         email: respUser?.email,

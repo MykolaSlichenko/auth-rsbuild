@@ -71,121 +71,123 @@ const RegisterPage = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center">
+        <div className="flex min-h-screen items-center justify-center px-3 py-6 sm:px-4">
             <form
                 onSubmit={handleSubmit}
-                className="w-full max-w-md space-y-4 border p-6 rounded-xl"
+                className="w-full max-w-md rounded-2xl border border-slate-200 bg-white/95 p-5 shadow-lg backdrop-blur sm:p-8"
             >
-                <h1 className="text-3xl font-bold text-center">
+                <h1 className="text-center text-2xl font-bold text-slate-900 sm:text-3xl">
                     Register
                 </h1>
 
-                <input
-                    type="text"
-                    placeholder="First name"
-                    value={firstName}
-                    onChange={(e) =>
-                        setFirstName(e.target.value)
-                    }
-                    className={`w-full border p-3 rounded-lg ${isError
-                        ? "border-red-500 bg-red-50"
-                        : ""
-                        }`}
-                />
-
-                <input
-                    type="text"
-                    placeholder="Last name"
-                    value={lastName}
-                    onChange={(e) =>
-                        setLastName(e.target.value)
-                    }
-                    className={`w-full border p-3 rounded-lg ${isError
-                        ? "border-red-500 bg-red-50"
-                        : ""
-                        }`}
-                />
-
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) =>
-                        setEmail(e.target.value)
-                    }
-                    className={`w-full border p-3 rounded-lg ${isError
-                        ? "border-red-500 bg-red-50"
-                        : ""
-                        }`}
-                />
-
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) =>
-                        setPassword(e.target.value)
-                    }
-                    className={`w-full border p-3 rounded-lg ${isError
-                        ? "border-red-500 bg-red-50"
-                        : ""
-                        }`}
-                />
-
-                <input
-                    type="password"
-                    placeholder="Confirm password"
-                    value={confirmPassword}
-                    onChange={(e) =>
-                        setConfirmPassword(e.target.value)
-                    }
-                    className={`w-full border p-3 rounded-lg ${isError
-                        ? "border-red-500 bg-red-50"
-                        : ""
-                        }`}
-                />
-
-                <label className="flex items-center gap-2 text-sm text-gray-600">
+                <div className="mt-5 space-y-3 sm:space-y-4">
                     <input
-                        type="checkbox"
-                        checked={acceptedTerms}
+                        type="text"
+                        placeholder="First name"
+                        value={firstName}
                         onChange={(e) =>
-                            setAcceptedTerms(e.target.checked)
+                            setFirstName(e.target.value)
                         }
-                        className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                        className={`w-full rounded-lg border p-3 text-base text-slate-700 outline-none transition ${isError
+                            ? "border-red-500 bg-red-50"
+                            : "border-slate-300 focus:border-blue-500"
+                            }`}
                     />
-                    Accept Terms & Conditions
-                </label>
 
-                <button
-                    type="submit"
-                    className="w-full rounded-lg cursor-pointer bg-blue-600 text-white font-bold text-lg p-4 border border-blue-700 hover:bg-blue-700 transition-colors"
-                >
-                    Create account
-                </button>
+                    <input
+                        type="text"
+                        placeholder="Last name"
+                        value={lastName}
+                        onChange={(e) =>
+                            setLastName(e.target.value)
+                        }
+                        className={`w-full rounded-lg border p-3 text-base text-slate-700 outline-none transition ${isError
+                            ? "border-red-500 bg-red-50"
+                            : "border-slate-300 focus:border-blue-500"
+                            }`}
+                    />
 
-                {message && (
-                    <p className={`text-sm p-3 rounded-lg ${isError
-                        ? "text-red-600 bg-red-50"
-                        : "text-green-600 bg-green-50"
-                        }`}>
-                        {message}
-                    </p>
-                )}
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) =>
+                            setEmail(e.target.value)
+                        }
+                        className={`w-full rounded-lg border p-3 text-base text-slate-700 outline-none transition ${isError
+                            ? "border-red-500 bg-red-50"
+                            : "border-slate-300 focus:border-blue-500"
+                            }`}
+                    />
 
-                <div className="pt-2">
-                    <p className="text-center text-sm text-gray-600">
-                        Already have an account?{" "}
-                        <button
-                            type="button"
-                            onClick={() =>
-                                navigate("/login")
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) =>
+                            setPassword(e.target.value)
+                        }
+                        className={`w-full rounded-lg border p-3 text-base text-slate-700 outline-none transition ${isError
+                            ? "border-red-500 bg-red-50"
+                            : "border-slate-300 focus:border-blue-500"
+                            }`}
+                    />
+
+                    <input
+                        type="password"
+                        placeholder="Confirm password"
+                        value={confirmPassword}
+                        onChange={(e) =>
+                            setConfirmPassword(e.target.value)
+                        }
+                        className={`w-full rounded-lg border p-3 text-base text-slate-700 outline-none transition ${isError
+                            ? "border-red-500 bg-red-50"
+                            : "border-slate-300 focus:border-blue-500"
+                            }`}
+                    />
+
+                    <label className="flex items-start gap-2 text-sm text-slate-600">
+                        <input
+                            type="checkbox"
+                            checked={acceptedTerms}
+                            onChange={(e) =>
+                                setAcceptedTerms(e.target.checked)
                             }
-                            className="font-semibold text-blue-600 hover:text-blue-700 hover:cursor-pointer transition-colors"
-                        >
-                            Log in here
-                        </button>
-                    </p>
+                            className="mt-0.5 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                        />
+                        <span>Accept Terms & Conditions</span>
+                    </label>
+
+                    <button
+                        type="submit"
+                        className="w-full rounded-lg border border-blue-700 bg-blue-600 p-3.5 text-lg font-bold text-white transition-colors hover:bg-blue-700"
+                    >
+                        Create account
+                    </button>
+
+                    {message && (
+                        <p className={`rounded-lg p-3 text-sm ${isError
+                            ? "bg-red-50 text-red-600"
+                            : "bg-green-50 text-green-600"
+                            }`}>
+                            {message}
+                        </p>
+                    )}
+
+                    <div className="pt-2">
+                        <p className="text-center text-sm text-slate-600">
+                            Already have an account?{" "}
+                            <button
+                                type="button"
+                                onClick={() =>
+                                    navigate("/login")
+                                }
+                                className="font-semibold text-blue-600 transition-colors hover:text-blue-700"
+                            >
+                                Log in here
+                            </button>
+                        </p>
+                    </div>
                 </div>
             </form>
         </div>

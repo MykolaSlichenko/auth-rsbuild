@@ -55,69 +55,71 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center">
+        <div className="flex min-h-screen items-center justify-center px-3 py-6 sm:px-4">
             <form
                 onSubmit={handleSubmit}
-                className="w-full max-w-md space-y-4 border p-6 rounded-xl"
+                className="w-full max-w-md rounded-2xl border border-slate-200 bg-white/95 p-5 shadow-lg backdrop-blur sm:p-8"
             >
-                <h1 className="text-3xl font-bold text-center">
+                <h1 className="text-center text-2xl font-bold text-slate-900 sm:text-3xl">
                     Login
                 </h1>
 
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) =>
-                        setEmail(e.target.value)
-                    }
-                    className={`w-full border p-3 rounded-lg ${
-                        isError
-                            ? "border-red-500 bg-red-50"
-                            : ""
-                    }`}
-                />
+                <div className="mt-5 space-y-3 sm:space-y-4">
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) =>
+                            setEmail(e.target.value)
+                        }
+                        className={`w-full rounded-lg border p-3 text-base text-slate-700 outline-none transition ${
+                            isError
+                                ? "border-red-500 bg-red-50"
+                                : "border-slate-300 focus:border-blue-500"
+                        }`}
+                    />
 
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) =>
-                        setPassword(e.target.value)
-                    }
-                    className={`w-full border p-3 rounded-lg ${
-                        isError
-                            ? "border-red-500 bg-red-50"
-                            : ""
-                    }`}
-                />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) =>
+                            setPassword(e.target.value)
+                        }
+                        className={`w-full rounded-lg border p-3 text-base text-slate-700 outline-none transition ${
+                            isError
+                                ? "border-red-500 bg-red-50"
+                                : "border-slate-300 focus:border-blue-500"
+                        }`}
+                    />
 
-                <button
-                    type="submit"
-                    className="w-full rounded-lg cursor-pointer bg-blue-600 text-white font-bold text-lg p-3 border border-blue-700 hover:bg-blue-700 transition-colors"
-                >
-                    Send
-                </button>
+                    <button
+                        type="submit"
+                        className="w-full rounded-lg border border-blue-700 bg-blue-600 p-3.5 text-lg font-bold text-white transition-colors hover:bg-blue-700"
+                    >
+                        Send
+                    </button>
 
-                {message && (
-                    <p className="text-sm text-red-600 bg-red-50 p-3 rounded-lg">
-                        {message}
-                    </p>
-                )}
+                    {message && (
+                        <p className="rounded-lg bg-red-50 p-3 text-sm text-red-600">
+                            {message}
+                        </p>
+                    )}
 
-                <div className="pt-2">
-                    <p className="text-center text-sm text-gray-600">
-                        Don't have an account?{" "}
-                        <button
-                            type="button"
-                            onClick={() =>
-                                navigate("/register")
-                            }
-                            className="font-semibold text-blue-600 hover:text-blue-700 hover:cursor-pointer transition-colors"
-                        >
-                            Sign up here
-                        </button>
-                    </p>
+                    <div className="pt-2">
+                        <p className="text-center text-sm text-slate-600">
+                            Don't have an account?{" "}
+                            <button
+                                type="button"
+                                onClick={() =>
+                                    navigate("/register")
+                                }
+                                className="font-semibold text-blue-600 transition-colors hover:text-blue-700"
+                            >
+                                Sign up here
+                            </button>
+                        </p>
+                    </div>
                 </div>
             </form>
         </div>
