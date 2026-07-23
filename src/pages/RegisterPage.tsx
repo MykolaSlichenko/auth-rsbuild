@@ -31,24 +31,62 @@ const RegisterPage = () => {
     ) => {
         e.preventDefault();
 
+        const trimmedFirstName = firstName.trim();
+        const trimmedLastName = lastName.trim();
+        const trimmedEmail = email.trim();
+        const trimmedPassword = password.trim();
+        const trimmedConfirmPassword = confirmPassword.trim();
+
+        if (!trimmedFirstName || !trimmedLastName) {
+            setMessage("First name and last name are required");
+            setIsError(true);
+            return;
+        }
+
+        if (!trimmedEmail) {
+            setMessage("Email is required");
+            setIsError(true);
+            return;
+        }
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(trimmedEmail)) {
+            setMessage("Please enter a valid email address");
+            setIsError(true);
+            return;
+        }
+
+        if (!trimmedPassword || !trimmedConfirmPassword) {
+            setMessage("Password and confirm password are required");
+            setIsError(true);
+            return;
+        }
+
+        if (trimmedPassword.length < 6) {
+            setMessage("Password must be at least 6 characters");
+            setIsError(true);
+            return;
+        }
+
+        if (trimmedPassword !== trimmedConfirmPassword) {
+            setMessage("Passwords do not match");
+            setIsError(true);
+            return;
+        }
+
         if (!acceptedTerms) {
             setMessage("Please accept the Terms & Conditions");
             setIsError(true);
             return;
         }
 
-        if (password !== confirmPassword) {
-            setMessage("Passwords do not match");
-            setIsError(true);
-            return;
-        }
-
         try {
             await api.post("/auth/register", {
-                firstName,
-                lastName,
-                email,
-                password,
+                firstName: trimmedFirstName,
+                lastName: trimmedLastName,
+                email: trimmedEmail,
+                password: trimmedPassword,
                 acceptedTerms,
             });
 
@@ -85,9 +123,13 @@ const RegisterPage = () => {
                         type="text"
                         placeholder="First name"
                         value={firstName}
-                        onChange={(e) =>
-                            setFirstName(e.target.value)
-                        }
+                        onChange={(e) => {
+                            setFirstName(e.target.value);
+                            if (message) {
+                                setMessage("");
+                                setIsError(false);
+                            }
+                        }}
                         className={`w-full rounded-lg border p-3 text-base text-slate-700 outline-none transition ${isError
                             ? "border-red-500 bg-red-50"
                             : "border-slate-300 focus:border-blue-500"
@@ -98,9 +140,13 @@ const RegisterPage = () => {
                         type="text"
                         placeholder="Last name"
                         value={lastName}
-                        onChange={(e) =>
-                            setLastName(e.target.value)
-                        }
+                        onChange={(e) => {
+                            setLastName(e.target.value);
+                            if (message) {
+                                setMessage("");
+                                setIsError(false);
+                            }
+                        }}
                         className={`w-full rounded-lg border p-3 text-base text-slate-700 outline-none transition ${isError
                             ? "border-red-500 bg-red-50"
                             : "border-slate-300 focus:border-blue-500"
@@ -111,9 +157,13 @@ const RegisterPage = () => {
                         type="email"
                         placeholder="Email"
                         value={email}
-                        onChange={(e) =>
-                            setEmail(e.target.value)
-                        }
+                        onChange={(e) => {
+                            setEmail(e.target.value);
+                            if (message) {
+                                setMessage("");
+                                setIsError(false);
+                            }
+                        }}
                         className={`w-full rounded-lg border p-3 text-base text-slate-700 outline-none transition ${isError
                             ? "border-red-500 bg-red-50"
                             : "border-slate-300 focus:border-blue-500"
@@ -124,9 +174,13 @@ const RegisterPage = () => {
                         type="password"
                         placeholder="Password"
                         value={password}
-                        onChange={(e) =>
-                            setPassword(e.target.value)
-                        }
+                        onChange={(e) => {
+                            setPassword(e.target.value);
+                            if (message) {
+                                setMessage("");
+                                setIsError(false);
+                            }
+                        }}
                         className={`w-full rounded-lg border p-3 text-base text-slate-700 outline-none transition ${isError
                             ? "border-red-500 bg-red-50"
                             : "border-slate-300 focus:border-blue-500"
@@ -137,9 +191,13 @@ const RegisterPage = () => {
                         type="password"
                         placeholder="Confirm password"
                         value={confirmPassword}
-                        onChange={(e) =>
-                            setConfirmPassword(e.target.value)
-                        }
+                        onChange={(e) => {
+                            setConfirmPassword(e.target.value);
+                            if (message) {
+                                setMessage("");
+                                setIsError(false);
+                            }
+                        }}
                         className={`w-full rounded-lg border p-3 text-base text-slate-700 outline-none transition ${isError
                             ? "border-red-500 bg-red-50"
                             : "border-slate-300 focus:border-blue-500"
