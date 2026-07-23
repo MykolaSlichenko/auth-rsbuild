@@ -24,12 +24,35 @@ const LoginPage = () => {
     ) => {
         e.preventDefault();
 
+        const trimmedEmail = email.trim();
+        const trimmedPassword = password.trim();
+
+        if (!trimmedEmail || !trimmedPassword) {
+            setMessage("Email and password are required");
+            setIsError(true);
+            return;
+        }
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(trimmedEmail)) {
+            setMessage("Please enter a valid email address");
+            setIsError(true);
+            return;
+        }
+
+        if (trimmedPassword.length < 6) {
+            setMessage("Password must be at least 6 characters");
+            setIsError(true);
+            return;
+        }
+
         try {
             const response = await api.post(
                 "/auth/login",
                 {
-                    email,
-                    password,
+                    email: trimmedEmail,
+                    password: trimmedPassword,
                 }
             );
             console.log(response.data);
@@ -69,9 +92,13 @@ const LoginPage = () => {
                         type="email"
                         placeholder="Email"
                         value={email}
-                        onChange={(e) =>
-                            setEmail(e.target.value)
-                        }
+                        onChange={(e) => {
+                            setEmail(e.target.value);
+                            if (message) {
+                                setMessage("");
+                                setIsError(false);
+                            }
+                        }}
                         className={`w-full rounded-lg border p-3 text-base text-slate-700 outline-none transition ${
                             isError
                                 ? "border-red-500 bg-red-50"
@@ -83,9 +110,13 @@ const LoginPage = () => {
                         type="password"
                         placeholder="Password"
                         value={password}
-                        onChange={(e) =>
-                            setPassword(e.target.value)
-                        }
+                        onChange={(e) => {
+                            setPassword(e.target.value);
+                            if (message) {
+                                setMessage("");
+                                setIsError(false);
+                            }
+                        }}
                         className={`w-full rounded-lg border p-3 text-base text-slate-700 outline-none transition ${
                             isError
                                 ? "border-red-500 bg-red-50"
