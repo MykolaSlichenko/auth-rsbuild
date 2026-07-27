@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import api from "../api/axios";
+import { validateRegisterForm } from "../validation/authSchemas";
 
 const RegisterPage = () => {
     const navigate = useNavigate();
@@ -26,60 +27,44 @@ const RegisterPage = () => {
     const [isError, setIsError] =
         useState(false);
 
+    const [isSubmitting, setIsSubmitting] =
+        useState(false);
+
+    const isSubmitDisabled =
+        isSubmitting ||
+        !firstName.trim() ||
+        !lastName.trim() ||
+        !email.trim() ||
+        !password.trim() ||
+        !confirmPassword.trim() ||
+        !acceptedTerms;
+
     const handleSubmit = async (
         e: React.FormEvent
     ) => {
         e.preventDefault();
 
+        const validation = validateRegisterForm({
+            firstName,
+            lastName,
+            email,
+            password,
+            confirmPassword,
+            acceptedTerms,
+        });
+
+        if (!validation.isValid) {
+            setMessage(validation.message ?? "Validation failed");
+            setIsError(true);
+            return;
+        }
+
         const trimmedFirstName = firstName.trim();
         const trimmedLastName = lastName.trim();
         const trimmedEmail = email.trim();
         const trimmedPassword = password.trim();
-        const trimmedConfirmPassword = confirmPassword.trim();
 
-        if (!trimmedFirstName || !trimmedLastName) {
-            setMessage("First name and last name are required");
-            setIsError(true);
-            return;
-        }
-
-        if (!trimmedEmail) {
-            setMessage("Email is required");
-            setIsError(true);
-            return;
-        }
-
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!emailPattern.test(trimmedEmail)) {
-            setMessage("Please enter a valid email address");
-            setIsError(true);
-            return;
-        }
-
-        if (!trimmedPassword || !trimmedConfirmPassword) {
-            setMessage("Password and confirm password are required");
-            setIsError(true);
-            return;
-        }
-
-        if (trimmedPassword.length < 6) {
-            setMessage("Password must be at least 6 characters");
-            setIsError(true);
-            return;
-        }
-
-        if (trimmedPassword !== trimmedConfirmPassword) {
-            setMessage("Passwords do not match");
-            setIsError(true);
-            return;
-        }
-
-        if (!acceptedTerms) {
-            setMessage("Please accept the Terms & Conditions");
-            setIsError(true);
-            return;
-        }
+        setIsSubmitting(true);
 
         try {
             await api.post("/auth/register", {
@@ -105,11 +90,26 @@ const RegisterPage = () => {
                 "Registration failed"
             );
             setIsError(true);
+        } finally {
+            window.setTimeout(() => {
+                setIsSubmitting(false);
+            }, 600);
         }
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center px-3 py-6 sm:px-4">
+        <div className="relative flex min-h-screen items-center justify-center px-3 py-6 sm:px-4">
+            {isSubmitting && (
+                <div className="absolute inset-0 z-20 flex items-center justify-center bg-white/80 backdrop-blur-sm">
+                    <div className="flex flex-col items-center gap-3 rounded-2xl border border-slate-200 bg-white px-6 py-5 shadow-lg">
+                        <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-200 border-t-blue-600" />
+                        <p className="text-sm font-medium text-slate-700">
+                            Creating your account...
+                        </p>
+                    </div>
+                </div>
+            )}
+
             <form
                 onSubmit={handleSubmit}
                 className="w-full max-w-md rounded-2xl border border-slate-200 bg-white/95 p-5 shadow-lg backdrop-blur sm:p-8"
@@ -218,9 +218,10 @@ const RegisterPage = () => {
 
                     <button
                         type="submit"
-                        className="w-full rounded-lg border border-blue-700 bg-blue-600 p-3.5 text-lg font-bold text-white transition-colors hover:bg-blue-700"
+                        disabled={isSubmitDisabled}
+                        className="flex w-full cursor-pointer items-center justify-center rounded-lg border border-blue-700 bg-blue-600 p-3.5 text-lg font-bold text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:border-slate-300 disabled:bg-slate-400"
                     >
-                        Create account
+                        {isSubmitting ? "Creating account..." : "Create account"}
                     </button>
 
                     {message && (
@@ -240,7 +241,7 @@ const RegisterPage = () => {
                                 onClick={() =>
                                     navigate("/login")
                                 }
-                                className="font-semibold text-blue-600 transition-colors hover:text-blue-700"
+                                className="cursor-pointer font-semibold text-blue-600 transition-colors hover:text-blue-700"
                             >
                                 Log in here
                             </button>
