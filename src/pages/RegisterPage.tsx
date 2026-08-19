@@ -7,19 +7,19 @@ import { validateRegisterForm } from "../validation/authSchemas";
 const RegisterPage = () => {
     const navigate = useNavigate();
 
-    const [firstName, setFirstName] = useState("Test");
+    const [firstName, setFirstName] = useState("");
 
-    const [lastName, setLastName] = useState("Last Test");
+    const [lastName, setLastName] = useState("");
 
     const [acceptedTerms, setAcceptedTerms] = useState(false);
 
     const [email, setEmail] =
-        useState("test@test.com");
+        useState("");
 
     const [password, setPassword] =
-        useState("Test123!");
+        useState("");
 
-    const [confirmPassword, setConfirmPassword] = useState("Test123!");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
     const [message, setMessage] =
         useState("");

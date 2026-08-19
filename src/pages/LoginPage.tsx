@@ -9,10 +9,10 @@ const LoginPage = () => {
     const { login } = useAuth();
 
     const [email, setEmail] =
-        useState("testw1w1@test.com");
+        useState("");
 
     const [password, setPassword] =
-        useState("Test123!");
+        useState("");
 
     const [message, setMessage] =
         useState("");
